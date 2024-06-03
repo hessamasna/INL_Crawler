@@ -19,15 +19,15 @@ def translate_text(text, src_language='en', dest_language='fr'):
     for idx, chunk in enumerate(chunks, start=1):
         if idx % 8 == 5:
             time.sleep(40)
-        # if idx % 50 == 2:
-        #     reset_tor = True
+        if idx % 50 == 2:
+            reset_tor = True
 
         translated_chunk = translator.translate(chunk, src=src_language, dest=dest_language, reset_tor=reset_tor)
         print("chunk number: ", idx)
         print(translated_chunk.text[0:100])
         time.sleep(10)
         translated_chunks.append(translated_chunk.text)
-        # reset_tor = False
+        reset_tor = False
 
     # Join the translated chunks back into a single text
     translated_text = ' '.join(translated_chunks)

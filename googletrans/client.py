@@ -152,6 +152,7 @@ class Translator:
             print('reset_tor')
             # new Tor identity. Calling this function includes time.sleep(3)
             rt.new_id()
+            print('reset_tor done')
             # test automatic TOR new identity
             rt.test()
             print(rt.test())
@@ -160,8 +161,9 @@ class Translator:
             print(rt.check_ip())
             r = rt.post(url, params=params, data=data)
 
-            if re.search(r"403 Forbidden", r.text):
-                print("Access denied: 403 Forbidden detected! change ip")
+            regex = r"client does not have permission"
+            if re.search(regex, r.text, re.DOTALL):
+                print("Access denied: 403 Forbidden detected! change ip... ")
             else:
                 break
 
