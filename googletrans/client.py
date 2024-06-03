@@ -166,11 +166,11 @@ class Translator:
 
             regex2 = r'Just a moment\.\.\.'
             if re.search(regex2, check, re.DOTALL):
-                print("Just a moment...")
+                print("Error: Just a moment...")
             else:
                 regex1 = r"client does not have permission"
                 if re.search(regex1, r.text, re.DOTALL):
-                    print("Access denied: 403 Forbidden detected! change ip... ")
+                    print("Error: Access denied: 403 Forbidden detected! change ip... ")
                 else:
                     break
 
