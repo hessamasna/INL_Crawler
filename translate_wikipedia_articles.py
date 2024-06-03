@@ -19,15 +19,15 @@ def translate_text(text, src_language='en', dest_language='fr'):
     for idx, chunk in enumerate(chunks, start=1):
         if idx % 8 == 5:
             time.sleep(40)
+        # if idx % 50 == 2:
+        #     reset_tor = True
 
-        if idx % 50 == 2:
-            reset_tor = True
         translated_chunk = translator.translate(chunk, src=src_language, dest=dest_language, reset_tor=reset_tor)
         print("chunk number: ", idx)
         print(translated_chunk.text[0:100])
-        time.sleep(70)
+        time.sleep(10)
         translated_chunks.append(translated_chunk.text)
-        reset_tor = False
+        # reset_tor = False
 
     # Join the translated chunks back into a single text
     translated_text = ' '.join(translated_chunks)
@@ -115,7 +115,6 @@ def main():
     global translated_articles_data
 
     categories = ["Culture", "Reference", "Religion", "People", "Society", "Geography", "History", "Technology"]
-    # categories = ["test"]
     for category in categories:
         file_path = f'articles/random_wikipedia_{category}_articles_without_translate.json'
         objects_array = read_json_file(file_path)
@@ -128,14 +127,14 @@ def main():
             if match:
                 result = match.group(1)
                 print("ready to translate:  ")
-                # time.sleep(30)
+                time.sleep(30)
                 translate_article(article['id'], article['title'], article['summary'], result.strip())
-                # time.sleep(120)
+                time.sleep(120)
 
-                if article['id'] % 3 == 0:
+                if article['id'] % 3 == 2:
                     print('write json and sleep')
                     save_as_json(translated_articles_data, "Translated_" + file_path)
-                    time.sleep(310)
+                    time.sleep(180)
             else:
                 print("No match found id =", article_id)
         save_as_json(translated_articles_data, "Translated_" + file_path)
