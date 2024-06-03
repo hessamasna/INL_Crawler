@@ -129,8 +129,11 @@ class Translator:
         res = rt.post(url, params=params, data=None)
         print(rt.check_ip())
         rt.check_ip()
-        print(res.text)
-        print(res)
+        print('res.text:  ', res.text)
+        print('res:  ', res)
+
+        print('get:    ', r)
+        print('get.r:    ', r.text)
 
         if r.status_code != 200 and self.raise_Exception:
             raise Exception('Unexpected status code "{}" from {}'.format(
