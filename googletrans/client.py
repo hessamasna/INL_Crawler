@@ -163,11 +163,10 @@ class Translator:
             print(check)
 
             regex2 = r'Just a moment\.\.\.'
-            if re.search(regex2, text, re.DOTALL):
+            if re.search(regex2, check, re.DOTALL):
                 print("Just a moment...")
                 time.sleep(10)
-                check = rt.check_ip()
-                print('check2: ',check)
+                print('check2: ',rt.check_ip())
             else:
                 break
 
