@@ -53,7 +53,7 @@ rt = RequestsTor(tor_ports=(9050, 9052, 9053, 9054, 9055, 9056, 9057, 9058, 9059
                             9269, 9270, 9271, 9272, 9273, 9274, 9275, 9276, 9277, 9278,
                             9279, 9280, 9281, 9282, 9283, 9284, 9285, 9286, 9287, 9288,
                             9289, 9290, 9291, 9292, 9293, 9294, 9295, 9296, 9297, 9298,
-                            9299, 9300), autochange_id=1)
+                            9299, 9300), autochange_id=3)
 
 
 class Translator:
@@ -133,17 +133,6 @@ class Translator:
             return self.service_urls[0]
         return random.choice(self.service_urls)
 
-    def _check_forbidden(text):
-        # Define the regex pattern to search for "403 Forbidden"
-        pattern = r"403 Forbidden"
-
-        # Search for the pattern in the provided text
-        if re.search(pattern, text):
-            print("Access denied: 403 Forbidden detected! change ip")
-            return True
-        else:
-            return False
-
     def _translate(self, text: str, dest: str, src: str, reset_tor: bool):
         url = urls.TRANSLATE_RPC.format(host=self._pick_service_url())
         data = {
@@ -170,9 +159,10 @@ class Translator:
         while True:
             print(rt.check_ip())
             r = rt.post(url, params=params, data=data)
-            forbidden = self._check_forbidden(r.text)
-            print('for: ', forbidden)
-            if not forbidden:
+
+            if re.search(r"403 Forbidden", r.text):
+                print("Access denied: 403 Forbidden detected! change ip")
+            else:
                 break
 
         if r.status_code != 200 and self.raise_Exception:
