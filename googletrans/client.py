@@ -160,7 +160,7 @@ class Translator:
 
         while True:
             check = rt.check_ip()
-            print(check)
+            print(check[0:50])
 
             r = rt.post(url, params=params, data=data)
 
