@@ -1,13 +1,25 @@
 import json
 import time
 import re
+import random
+import os
 
 # ========================
 
 from googletrans import Translator
 
 
+def restart_tor_service():
+    print("Restarting tor service...")
+    os.system('sudo systemctl restart tor')
+    time.sleep(40)  # Sleep to ensure the service restarts
+
+
+counter = 0
+
+
 def translate_text(text, src_language='en', dest_language='fr'):
+    global counter
     translator = Translator()
     print('Processing ...')
 
@@ -17,15 +29,25 @@ def translate_text(text, src_language='en', dest_language='fr'):
     reset_tor = False
     translated_chunks = []
     for idx, chunk in enumerate(chunks, start=1):
+        counter = counter + 1
         if idx % 8 == 5:
             time.sleep(40)
-        # if idx % 50 == 2:
-        #     reset_tor = True
 
-        translated_chunk = translator.translate(chunk, src=src_language, dest=dest_language, reset_tor=reset_tor)
+        if counter == 100:
+            restart_tor_service()
+            counter = 0
+
+        try:
+            translated_chunk = translator.translate(chunk, src=src_language, dest=dest_language, reset_tor=reset_tor)
+        except:
+            print("RequestException wait and change tor pool ....")
+            restart_tor_service()
+            counter = 0
+            translated_chunk = translator.translate(chunk, src=src_language, dest=dest_language, reset_tor=reset_tor)
+
         print("chunk number: ", idx)
         print(translated_chunk.text[0:100])
-        time.sleep(20)
+        time.sleep(random.uniform(20, 40))
         translated_chunks.append(translated_chunk.text)
         # reset_tor = False
 
@@ -76,28 +98,28 @@ translated_articles_data = []
 def translate_article(article_id, title, summary, article):
     print("\n Translating article to French: ")
     translated_text_fr = translate_text(article, src_language='en', dest_language='fr')
-    time.sleep(80)
+    time.sleep(random.uniform(60, 80))
     print("Translating article to Spanish: ")
     translated_text_es = translate_text(article, src_language='en', dest_language='es')
-    time.sleep(90)
+    time.sleep(random.uniform(60, 90))
     print("Translating article to Arabic: ")
     translated_text_ar = translate_text(article, src_language='en', dest_language='ar')
-    time.sleep(120)
+    time.sleep(random.uniform(80, 120))
     print("Translating article to Farsi: ")
     translated_text_fa = translate_text(article, src_language='en', dest_language='fa')
-    time.sleep(100)
+    time.sleep(random.uniform(80, 100))
     print("Translating article to Russian: ")
     translated_text_ru = translate_text(article, src_language='en', dest_language='ru')
-    time.sleep(110)
-    print("Translating article to hindi: ")
-    translated_text_hi = translate_text(article, src_language='en', dest_language='hi')
+    # time.sleep(110)
+    # print("Translating article to hindi: ")
+    # translated_text_hi = translate_text(article, src_language='en', dest_language='hi')
 
     # translated_text_fr = ''
     # translated_text_es = ''
     # translated_text_ar = ''
     # translated_text_fa = ''
     # translated_text_ru = ''
-    # translated_text_hi = ''
+    translated_text_hi = ''
 
     article_object = create_article_object(article_id, title, summary, article, translated_text_fr,
                                            translated_text_es,
@@ -128,16 +150,16 @@ def main():
             if match:
                 result = match.group(1)
                 print("ready to translate:  ")
-                time.sleep(30)
+                time.sleep(random.uniform(30, 74))
                 translate_article(article['id'], article['title'], article['summary'], result.strip())
-                time.sleep(50)
+                time.sleep(random.uniform(40, 80))
 
                 print("Article No.\"", article['id'], "\"added to \"", category, "\" file")
                 save_as_json(translated_articles_data, "Translated_" + file_path_write)
 
                 if article['id'] % 4 == 3:
                     print('sleep for 180s ... ')
-                    time.sleep(180)
+                    time.sleep(random.uniform(140, 180))
             else:
                 print("No match found id =", article_id)
         save_as_json(translated_articles_data, "Translated_" + file_path_write)
