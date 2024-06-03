@@ -159,19 +159,23 @@ class Translator:
             print(rt.test())
 
         while True:
-            print(rt.check_ip())
-            r = rt.post(url, params=params, data=data)
-
-            regex1 = r"client does not have permission"
-            if re.search(regex1, r.text, re.DOTALL):
-                print("Access denied: 403 Forbidden detected! change ip... ")
-            else:
-                break
+            check = rt.check_ip()
+            print(check)
 
             regex2 = r'Just a moment\.\.\.'
             if re.search(regex2, text, re.DOTALL):
                 print("Just a moment...")
                 time.sleep(10)
+                check = rt.check_ip()
+                print('check2: ',check)
+            else:
+                break
+
+            r = rt.post(url, params=params, data=data)
+
+            regex1 = r"client does not have permission"
+            if re.search(regex1, r.text, re.DOTALL):
+                print("Access denied: 403 Forbidden detected! change ip... ")
             else:
                 break
 
