@@ -106,7 +106,7 @@ class Translator:
             return self.service_urls[0]
         return random.choice(self.service_urls)
 
-    def _translate(self, text: str, dest: str, src: str):
+    def _translate(self, text: str, dest: str, src: str, reset_tor: bool):
         url = urls.TRANSLATE_RPC.format(host=self._pick_service_url())
         data = {
             'f.req': self._build_rpc_request(text, dest, src),
@@ -125,15 +125,19 @@ class Translator:
                                     9060, 9061, 9062, 9063, 9064, 9065, 9066, 9067, 9068, 9069,
                                     9070, 9071, 9072, 9073, 9074, 9075, 9076, 9077, 9078, 9079,
                                     9080, 9081, 9082, 9083, 9084, 9085, 9086, 9087, 9088, 9089,
-                                    9090, 9091, 9092, 9093, 9094, 9095, 9096, 9097, 9098, 9099), autochange_id=1)
+                                    9090, 9091, 9092, 9093, 9094, 9095, 9096, 9097, 9098, 9099), autochange_id=5)
+
+        if reset_tor:
+            print('reset_tor')
+            # new Tor identity. Calling this function includes time.sleep(3)
+            rt.new_id()
+            # test automatic TOR new identity
+            rt.test()
+            print(rt.test())
+
+        print(rt.check_ip())
+
         r = rt.post(url, params=params, data=data)
-        # print(rt.check_ip())
-        # rt.check_ip()
-        # print('res.text:  ', res.text)
-        # print('res:  ', res)
-        #
-        # print('get:    ', r)
-        # print('get.r:    ', r.text)
 
         if r.status_code != 200 and self.raise_Exception:
             raise Exception('Unexpected status code "{}" from {}'.format(
@@ -186,7 +190,7 @@ class Translator:
 
         return extra
 
-    def translate(self, text: str, dest='en', src='auto'):
+    def translate(self, text: str, dest='en', src='auto', reset_tor=False):
         dest = dest.lower().split('_', 1)[0]
         src = src.lower().split('_', 1)[0]
 
@@ -207,7 +211,7 @@ class Translator:
                 raise ValueError('invalid destination language')
 
         origin = text
-        data, response = self._translate(text, dest, src)
+        data, response = self._translate(text, dest, src, reset_tor)
 
         token_found = False
         square_bracket_counts = [0, 0]

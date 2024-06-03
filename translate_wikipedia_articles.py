@@ -14,16 +14,20 @@ def translate_text(text, src_language='en', dest_language='fr'):
     # Split the text into smaller chunks because Google Translate has a limit on the text length
     chunk_size = 5000
     chunks = [text[i:i + chunk_size] for i in range(0, len(text), chunk_size)]
-
+    reset_tor = False
     translated_chunks = []
     for idx, chunk in enumerate(chunks, start=1):
-        # if idx % 5 == 1:
-        #     time.sleep(110)
-        translated_chunk = translator.translate(chunk, src=src_language, dest=dest_language)
+        if idx % 8 == 5:
+            time.sleep(40)
+
+        if idx % 50 == 2:
+            reset_tor = True
+        translated_chunk = translator.translate(chunk, src=src_language, dest=dest_language, reset_tor=reset_tor)
         print("chunk number: ", idx)
         print(translated_chunk.text[0:100])
         time.sleep(70)
         translated_chunks.append(translated_chunk.text)
+        reset_tor = False
 
     # Join the translated chunks back into a single text
     translated_text = ' '.join(translated_chunks)
