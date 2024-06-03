@@ -22,7 +22,7 @@ def translate_text(text, src_language='en', dest_language='fr'):
         translated_chunk = translator.translate(chunk, src=src_language, dest=dest_language)
         print("chunk number: ", idx)
         print(translated_chunk.text[0:100])
-        # time.sleep(70)
+        time.sleep(70)
         translated_chunks.append(translated_chunk.text)
 
     # Join the translated chunks back into a single text
