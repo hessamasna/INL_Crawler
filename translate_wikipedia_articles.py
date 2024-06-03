@@ -132,8 +132,10 @@ def main():
                 translate_article(article['id'], article['title'], article['summary'], result.strip())
                 time.sleep(50)
 
+                print("Article No.\"", article['id'], "\"added to \"", category, "\" file")
                 save_as_json(translated_articles_data, "Translated_" + file_path_write)
-                if article['id'] % 3 == 2:
+
+                if article['id'] % 4 == 3:
                     print('sleep for 180s ... ')
                     time.sleep(180)
             else:
