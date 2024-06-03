@@ -5,6 +5,7 @@ A Translation module.
 You can translate text using this module.
 """
 import random
+import time
 import typing
 import re
 import json
@@ -161,9 +162,16 @@ class Translator:
             print(rt.check_ip())
             r = rt.post(url, params=params, data=data)
 
-            regex = r"client does not have permission"
-            if re.search(regex, r.text, re.DOTALL):
+            regex1 = r"client does not have permission"
+            if re.search(regex1, r.text, re.DOTALL):
                 print("Access denied: 403 Forbidden detected! change ip... ")
+            else:
+                break
+
+            regex2 = r'Just a moment\.\.\.'
+            if re.search(regex2, text, re.DOTALL):
+                print("Just a moment...")
+                time.sleep(10)
             else:
                 break
 
