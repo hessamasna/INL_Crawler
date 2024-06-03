@@ -121,16 +121,16 @@ class Translator:
         }
         r = self.client.post(url, params=params, data=data)
 
-        rt = RequestsTor(tor_ports=(9050, 9052, 9053, 9054, 9055, 9056, 9057, 9058, 9059,
-                                    9060, 9061, 9062, 9063, 9064, 9065, 9066, 9067, 9068, 9069,
-                                    9070, 9071, 9072, 9073, 9074, 9075, 9076, 9077, 9078, 9079,
-                                    9080, 9081, 9082, 9083, 9084, 9085, 9086, 9087, 9088, 9089,
-                                    9090, 9091, 9092, 9093, 9094, 9095, 9096, 9097, 9098, 9099), autochange_id=1)
-        rt.post(url, params=params, data=None)
-        print(rt.check_ip())
-        rt.check_ip()
-        print(rt.text)
-        print(rt)
+        # rt = RequestsTor(tor_ports=(9050, 9052, 9053, 9054, 9055, 9056, 9057, 9058, 9059,
+        #                             9060, 9061, 9062, 9063, 9064, 9065, 9066, 9067, 9068, 9069,
+        #                             9070, 9071, 9072, 9073, 9074, 9075, 9076, 9077, 9078, 9079,
+        #                             9080, 9081, 9082, 9083, 9084, 9085, 9086, 9087, 9088, 9089,
+        #                             9090, 9091, 9092, 9093, 9094, 9095, 9096, 9097, 9098, 9099), autochange_id=1)
+        # rt.post(url, params=params, data=None)
+        # print(rt.check_ip())
+        # rt.check_ip()
+        # print(rt.text)
+        # print(rt)
 
         if r.status_code != 200 and self.raise_Exception:
             raise Exception('Unexpected status code "{}" from {}'.format(
