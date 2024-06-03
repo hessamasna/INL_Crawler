@@ -25,7 +25,7 @@ def translate_text(text, src_language='en', dest_language='fr'):
         translated_chunk = translator.translate(chunk, src=src_language, dest=dest_language, reset_tor=reset_tor)
         print("chunk number: ", idx)
         print(translated_chunk.text[0:100])
-        time.sleep(10)
+        time.sleep(20)
         translated_chunks.append(translated_chunk.text)
         # reset_tor = False
 
@@ -82,13 +82,13 @@ def translate_article(article_id, title, summary, article):
     time.sleep(90)
     print("Translating article to Arabic: ")
     translated_text_ar = translate_text(article, src_language='en', dest_language='ar')
-    time.sleep(140)
+    time.sleep(120)
     print("Translating article to Farsi: ")
     translated_text_fa = translate_text(article, src_language='en', dest_language='fa')
-    time.sleep(120)
+    time.sleep(100)
     print("Translating article to Russian: ")
     translated_text_ru = translate_text(article, src_language='en', dest_language='ru')
-    time.sleep(150)
+    time.sleep(110)
     print("Translating article to hindi: ")
     translated_text_hi = translate_text(article, src_language='en', dest_language='hi')
 
@@ -130,7 +130,7 @@ def main():
                 print("ready to translate:  ")
                 time.sleep(30)
                 translate_article(article['id'], article['title'], article['summary'], result.strip())
-                time.sleep(120)
+                time.sleep(50)
 
                 if article['id'] % 3 == 2:
                     print('write json and sleep')
