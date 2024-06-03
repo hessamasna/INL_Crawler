@@ -116,8 +116,9 @@ def main():
 
     categories = ["Culture", "Reference", "Religion", "People", "Society", "Geography", "History", "Technology"]
     for category in categories:
-        file_path = f'articles/random_wikipedia_{category}_articles_without_translate.json'
-        objects_array = read_json_file(file_path)
+        file_path_read = f'articles/random_wikipedia_{category}_articles_without_translate.json'
+        file_path_write = f'random_wikipedia_{category}_articles_without_translate.json'
+        objects_array = read_json_file(file_path_read)
 
         pattern = r"^(.*?)(\bSee also\b|\bReferences\b|\bExternal links\b)"
 
@@ -133,11 +134,11 @@ def main():
 
                 if article['id'] % 3 == 2:
                     print('write json and sleep')
-                    save_as_json(translated_articles_data, "Translated_" + file_path)
+                    save_as_json(translated_articles_data, "Translated_" + file_path_write)
                     time.sleep(180)
             else:
                 print("No match found id =", article_id)
-        save_as_json(translated_articles_data, "Translated_" + file_path)
+        save_as_json(translated_articles_data, "Translated_" + file_path_write)
         translated_articles_data = []
 
 
