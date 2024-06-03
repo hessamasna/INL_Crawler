@@ -133,6 +133,17 @@ class Translator:
             return self.service_urls[0]
         return random.choice(self.service_urls)
 
+    def _check_forbidden(text):
+        # Define the regex pattern to search for "403 Forbidden"
+        pattern = r"403 Forbidden"
+
+        # Search for the pattern in the provided text
+        if re.search(pattern, text):
+            print("Access denied: 403 Forbidden detected! change ip")
+            return True
+        else:
+            return False
+
     def _translate(self, text: str, dest: str, src: str, reset_tor: bool):
         url = urls.TRANSLATE_RPC.format(host=self._pick_service_url())
         data = {
@@ -156,9 +167,13 @@ class Translator:
             rt.test()
             print(rt.test())
 
-        print(rt.check_ip())
-
-        r = rt.post(url, params=params, data=data)
+        while True:
+            print(rt.check_ip())
+            r = rt.post(url, params=params, data=data)
+            forbidden = self._check_forbidden(r.text)
+            print('for: ', forbidden)
+            if not forbidden:
+                break
 
         if r.status_code != 200 and self.raise_Exception:
             raise Exception('Unexpected status code "{}" from {}'.format(
