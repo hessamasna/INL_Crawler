@@ -114,7 +114,7 @@ def save_as_json(articles_array, filename):
 def main():
     global translated_articles_data
 
-    categories = ["Culture", "Reference", "Religion", "People", "Society", "Geography", "History", "Technology"]
+    categories = ["Reference", "Religion", "People", "Society", "Geography", "History", "Technology", "Culture"]
     for category in categories:
         file_path_read = f'articles/random_wikipedia_{category}_articles_without_translate.json'
         file_path_write = f'random_wikipedia_{category}_articles_without_translate.json'
