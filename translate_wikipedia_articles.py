@@ -132,9 +132,9 @@ def main():
                 translate_article(article['id'], article['title'], article['summary'], result.strip())
                 time.sleep(50)
 
+                save_as_json(translated_articles_data, "Translated_" + file_path_write)
                 if article['id'] % 3 == 2:
-                    print('write json and sleep')
-                    save_as_json(translated_articles_data, "Translated_" + file_path_write)
+                    print('sleep for 180s ... ')
                     time.sleep(180)
             else:
                 print("No match found id =", article_id)
