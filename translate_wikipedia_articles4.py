@@ -12,7 +12,7 @@ from googletrans import Translator
 def restart_tor_service():
     print("Restarting tor service...")
     os.system('sudo systemctl restart tor')
-    time.sleep(40)  # Sleep to ensure the service restarts
+    time.sleep(30)  # Sleep to ensure the service restarts
 
 
 counter = 0
@@ -47,7 +47,7 @@ def translate_text(text, src_language='en', dest_language='fr'):
 
         print("chunk number: ", idx)
         print(translated_chunk.text[0:100])
-        time.sleep(random.uniform(22, 50))
+        time.sleep(random.uniform(10, 30))
         translated_chunks.append(translated_chunk.text)
         # reset_tor = False
 
@@ -98,16 +98,16 @@ translated_articles_data = []
 def translate_article(article_id, title, summary, article):
     print("\n Translating article to French: ")
     translated_text_fr = translate_text(article, src_language='en', dest_language='fr')
-    time.sleep(random.uniform(20, 30))
+    time.sleep(random.uniform(10, 20))
     print("Translating article to Spanish: ")
     translated_text_es = translate_text(article, src_language='en', dest_language='es')
-    time.sleep(random.uniform(20, 30))
+    time.sleep(random.uniform(10, 20))
     print("Translating article to Arabic: ")
     translated_text_ar = translate_text(article, src_language='en', dest_language='ar')
-    time.sleep(random.uniform(30, 45))
+    time.sleep(random.uniform(10, 35))
     print("Translating article to Farsi: ")
     translated_text_fa = translate_text(article, src_language='en', dest_language='fa')
-    time.sleep(random.uniform(20, 40))
+    time.sleep(random.uniform(10, 20))
     print("Translating article to Russian: ")
     translated_text_ru = translate_text(article, src_language='en', dest_language='ru')
     # time.sleep(110)
@@ -136,8 +136,7 @@ def save_as_json(articles_array, filename):
 def main():
     global translated_articles_data
 
-    # categories = ["Society", "Geography", "Culture", "Reference", "Technology", "History", "Religion", "People"]
-    categories = ["Society"]
+    categories = ["Geography"]
     for category in categories:
         file_path_read = f'articles/random_wikipedia_{category}_articles_without_translate.json'
         file_path_write = f'random_wikipedia_{category}_articles_without_translate.json'
@@ -151,16 +150,16 @@ def main():
             if match:
                 result = match.group(1)
                 print("ready to translate:  ")
-                time.sleep(random.uniform(15, 34))
+                time.sleep(random.uniform(15, 24))
                 translate_article(article['id'], article['title'], article['summary'], result.strip())
-                time.sleep(random.uniform(20, 42))
+                time.sleep(random.uniform(10, 22))
 
                 print("Article No.\"", article['id'], "\"added to \"", category, "\" file")
                 save_as_json(translated_articles_data, "Translated_" + file_path_write)
 
                 if article['id'] % 8 == 7:
                     print('sleep for 180s ... ')
-                    time.sleep(random.uniform(60, 80))
+                    time.sleep(random.uniform(30, 50))
             else:
                 print("No match found id =", article_id)
         save_as_json(translated_articles_data, "Translated_" + file_path_write)
