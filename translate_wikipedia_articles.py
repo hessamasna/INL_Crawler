@@ -77,6 +77,23 @@ def read_json_file(file_path):
         return []
 
 
+def load_translated_jsons(file_path):
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            data = json.load(file)
+            last = data.pop()
+            return last['id']
+    except FileNotFoundError:
+        print(f"File {file_path} not found.")
+        return 0
+    except json.JSONDecodeError:
+        print(f"Error decoding JSON from file {file_path}.")
+        return 0
+    except UnicodeDecodeError as e:
+        print(f"Encoding error: {e}")
+        return 0
+
+
 def create_article_object(article_id, title, summary, translated_text_en, translated_text_fr, translated_text_es,
                           translated_text_ar, translated_text_fa, translated_text_ru, translated_text_hi):
     return {"article_id": article_id, "title": title,
@@ -142,10 +159,14 @@ def main():
         file_path_read = f'articles/random_wikipedia_{category}_articles_without_translate.json'
         file_path_write = f'random_wikipedia_{category}_articles_without_translate.json'
         objects_array = read_json_file(file_path_read)
-
+        last_index = load_translated_jsons("Translated_" + file_path_write) + 1
         pattern = r"^(.*?)(\bSee also\b|\bReferences\b|\bExternal links\b)"
 
         for article_id, article in enumerate(objects_array, start=1):
+
+            if article['id'] < last_index:
+                continue
+
             print("++++++ title :", article['id'], ". ", article['title'], ' ++++++')
             match = re.search(pattern, article['content']['EN'], re.DOTALL | re.IGNORECASE)
             if match:
