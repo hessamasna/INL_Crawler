@@ -47,7 +47,7 @@ def translate_text(text, src_language='en', dest_language='fr'):
 
         print("chunk number: ", idx)
         print(translated_chunk.text[0:100])
-        time.sleep(random.uniform(10, 30))
+        time.sleep(random.uniform(10, 25))
         translated_chunks.append(translated_chunk.text)
         # reset_tor = False
 
@@ -150,10 +150,11 @@ def load_translated_jsons(file_path):
         print(f"Encoding error: {e}")
         return 0
 
+
 def main():
     global translated_articles_data
 
-    categories = ["History"]
+    categories = ["Geography"]
     for category in categories:
         file_path_read = f'articles/random_wikipedia_{category}_articles_without_translate.json'
         file_path_write = f'random_wikipedia_{category}_articles_without_translate.json'
