@@ -138,7 +138,7 @@ def load_translated_jsons(file_path):
         with open(file_path, 'r', encoding='utf-8') as file:
             data = json.load(file)
             last = data.pop()
-            return last['id']
+            return last['article_id']
     except FileNotFoundError:
         print(f"File {file_path} not found.")
         return 0

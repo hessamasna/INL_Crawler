@@ -77,23 +77,6 @@ def read_json_file(file_path):
         return []
 
 
-def load_translated_jsons(file_path):
-    try:
-        with open(file_path, 'r', encoding='utf-8') as file:
-            data = json.load(file)
-            last = data.pop()
-            return last['id']
-    except FileNotFoundError:
-        print(f"File {file_path} not found.")
-        return 0
-    except json.JSONDecodeError:
-        print(f"Error decoding JSON from file {file_path}.")
-        return 0
-    except UnicodeDecodeError as e:
-        print(f"Encoding error: {e}")
-        return 0
-
-
 def create_article_object(article_id, title, summary, translated_text_en, translated_text_fr, translated_text_es,
                           translated_text_ar, translated_text_fa, translated_text_ru, translated_text_hi):
     return {"article_id": article_id, "title": title,
@@ -148,6 +131,23 @@ def translate_article(article_id, title, summary, article):
 def save_as_json(articles_array, filename):
     with open(filename, 'w', encoding='utf-8') as json_file:
         json.dump(articles_array, json_file, ensure_ascii=False, indent=4)
+
+
+def load_translated_jsons(file_path):
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            data = json.load(file)
+            last = data.pop()
+            return last['article_id']
+    except FileNotFoundError:
+        print(f"File {file_path} not found.")
+        return 0
+    except json.JSONDecodeError:
+        print(f"Error decoding JSON from file {file_path}.")
+        return 0
+    except UnicodeDecodeError as e:
+        print(f"Encoding error: {e}")
+        return 0
 
 
 def main():

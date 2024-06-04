@@ -133,13 +133,12 @@ def save_as_json(articles_array, filename):
         json.dump(articles_array, json_file, ensure_ascii=False, indent=4)
 
 
-
 def load_translated_jsons(file_path):
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             data = json.load(file)
             last = data.pop()
-            return last['id']
+            return last['article_id']
     except FileNotFoundError:
         print(f"File {file_path} not found.")
         return 0
@@ -149,6 +148,7 @@ def load_translated_jsons(file_path):
     except UnicodeDecodeError as e:
         print(f"Encoding error: {e}")
         return 0
+
 
 def main():
     global translated_articles_data
