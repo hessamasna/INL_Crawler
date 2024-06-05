@@ -161,7 +161,6 @@ def main():
         last_index = load_translated_jsons("Translated_" + file_path_write) + 1
 
         pattern = r"^(.*?)(\bSee also\b|\bReferences\b|\bExternal links\b)"
-        counter_try = 0
         for article_id, article in enumerate(objects_array, start=1):
             try:
                 if article['id'] < last_index:
@@ -186,10 +185,6 @@ def main():
                     print("No match found id =", article_id)
             except:
                 print('try catch error')
-                counter_try = counter_try + 1
-                if counter_try == 2:
-                    counter_try = 0
-                    last_index = last_index + 1
 
         save_as_json(translated_articles_data, "Translated_" + file_path_write)
         translated_articles_data = []
