@@ -161,28 +161,36 @@ def main():
         last_index = load_translated_jsons("Translated_" + file_path_write) + 1
 
         pattern = r"^(.*?)(\bSee also\b|\bReferences\b|\bExternal links\b)"
-
+        counter_try = 0
         for article_id, article in enumerate(objects_array, start=1):
-            if article['id'] < last_index:
-                continue
+            try:
+                if article['id'] < last_index:
+                    continue
 
-            print("++++++ title :", article['id'], ". ", article['title'], ' ++++++')
-            match = re.search(pattern, article['content']['EN'], re.DOTALL | re.IGNORECASE)
-            if match:
-                result = match.group(1)
-                print("ready to translate:  ")
-                time.sleep(random.uniform(15, 24))
-                translate_article(article['id'], article['title'], article['summary'], result.strip())
-                time.sleep(random.uniform(10, 22))
+                print("++++++ title :", article['id'], ". ", article['title'], ' ++++++')
+                match = re.search(pattern, article['content']['EN'], re.DOTALL | re.IGNORECASE)
+                if match:
+                    result = match.group(1)
+                    print("ready to translate:  ")
+                    time.sleep(random.uniform(15, 24))
+                    translate_article(article['id'], article['title'], article['summary'], result.strip())
+                    time.sleep(random.uniform(10, 22))
 
-                print("Article No.\"", article['id'], "\"added to \"", category, "\" file")
-                save_as_json(translated_articles_data, "Translated_" + file_path_write)
+                    print("Article No.\"", article['id'], "\"added to \"", category, "\" file")
+                    save_as_json(translated_articles_data, "Translated_" + file_path_write)
 
-                if article['id'] % 8 == 7:
-                    print('sleep for 180s ... ')
-                    time.sleep(random.uniform(30, 50))
-            else:
-                print("No match found id =", article_id)
+                    if article['id'] % 8 == 7:
+                        print('sleep for 180s ... ')
+                        time.sleep(random.uniform(30, 50))
+                else:
+                    print("No match found id =", article_id)
+            except:
+                print('try catch error')
+                counter_try = counter_try + 1
+                if counter_try == 2:
+                    counter_try = 0
+                    last_index = last_index + 1
+
         save_as_json(translated_articles_data, "Translated_" + file_path_write)
         translated_articles_data = []
 
