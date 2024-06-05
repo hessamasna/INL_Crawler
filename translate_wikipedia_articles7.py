@@ -181,7 +181,7 @@ def main():
 
                     if article['id'] % 8 == 7:
                         print('sleep for 180s ... ')
-                        time.sleep(random.uniform(30, 50))
+                        time.sleep(random.uniform(30, 40))
                 else:
                     print("No match found id =", article_id)
             except:

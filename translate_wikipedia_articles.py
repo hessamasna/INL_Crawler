@@ -31,7 +31,7 @@ def translate_text(text, src_language='en', dest_language='fr'):
     for idx, chunk in enumerate(chunks, start=1):
         counter = counter + 1
         if idx % 8 == 5:
-            time.sleep(30)
+            time.sleep(20)
 
         if counter == 100:
             restart_tor_service()
@@ -47,7 +47,7 @@ def translate_text(text, src_language='en', dest_language='fr'):
 
         print("chunk number: ", idx)
         print(translated_chunk.text[0:100])
-        time.sleep(random.uniform(22, 50))
+        time.sleep(random.uniform(22, 40))
         translated_chunks.append(translated_chunk.text)
         # reset_tor = False
 
@@ -104,10 +104,10 @@ def translate_article(article_id, title, summary, article):
     time.sleep(random.uniform(20, 30))
     print("Translating article to Arabic: ")
     translated_text_ar = translate_text(article, src_language='en', dest_language='ar')
-    time.sleep(random.uniform(30, 45))
+    time.sleep(random.uniform(25, 35))
     print("Translating article to Farsi: ")
     translated_text_fa = translate_text(article, src_language='en', dest_language='fa')
-    time.sleep(random.uniform(20, 40))
+    time.sleep(random.uniform(20, 30))
     print("Translating article to Russian: ")
     translated_text_ru = translate_text(article, src_language='en', dest_language='ru')
     # time.sleep(110)
@@ -174,14 +174,14 @@ def main():
                     print("ready to translate:  ")
                     time.sleep(random.uniform(15, 34))
                     translate_article(article['id'], article['title'], article['summary'], result.strip())
-                    time.sleep(random.uniform(20, 42))
+                    time.sleep(random.uniform(20, 32))
 
                     print("Article No.\"", article['id'], "\"added to \"", category, "\" file")
                     save_as_json(translated_articles_data, "Translated_" + file_path_write)
 
-                    if article['id'] % 8 == 7:
+                    if article['id'] % 10 == 7:
                         print('sleep for 180s ... ')
-                        time.sleep(random.uniform(60, 80))
+                        time.sleep(random.uniform(40, 60))
                 else:
                     print("No match found id =", article_id)
             except:

@@ -30,7 +30,7 @@ def translate_text(text, src_language='en', dest_language='fr'):
     translated_chunks = []
     for idx, chunk in enumerate(chunks, start=1):
         counter = counter + 1
-        if idx % 8 == 5:
+        if idx % 10 == 7:
             time.sleep(30)
 
         if counter == 100:
@@ -179,7 +179,7 @@ def main():
                     print("Article No.\"", article['id'], "\"added to \"", category, "\" file")
                     save_as_json(translated_articles_data, "Translated_" + file_path_write)
 
-                    if article['id'] % 8 == 7:
+                    if article['id'] % 10 == 7:
                         print('sleep for 30s ... ')
                         time.sleep(random.uniform(20, 40))
                 else:

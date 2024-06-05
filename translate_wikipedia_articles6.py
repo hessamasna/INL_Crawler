@@ -178,9 +178,9 @@ def main():
                     print("Article No.\"", article['id'], "\"added to \"", category, "\" file")
                     save_as_json(translated_articles_data, "Translated_" + file_path_write)
 
-                    if article['id'] % 8 == 7:
+                    if article['id'] % 10 == 7:
                         print('sleep for 180s ... ')
-                        time.sleep(random.uniform(30, 50))
+                        time.sleep(random.uniform(20, 40))
                 else:
                     print("No match found id =", article_id)
             except:
