@@ -161,6 +161,7 @@ def main():
         file_path_write = f'random_wikipedia_{category}_articles_without_translate.json'
         objects_array = read_json_file(file_path_read)
         last_index = load_translated_jsons("Translated_" + file_path_write) + 1
+        print(len(translated_articles_data), "articles founded in the file ")
 
         pattern = r"^(.*?)(\bSee also\b|\bReferences\b|\bExternal links\b|\BSources\b)"
 
@@ -197,7 +198,7 @@ def main():
                 print('try catch error')
 
         save_as_json(translated_articles_data, "Translated_" + file_path_write)
-        translated_articles_data = []
+        # translated_articles_data = []
 
 
 if __name__ == "__main__":

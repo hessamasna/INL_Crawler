@@ -163,6 +163,7 @@ def main():
         last_index = load_translated_jsons("Translated_" + file_path_write) + 1
 
         pattern = r"^(.*?)(\bSee also\b|\bReferences\b|\bExternal links\b|\BSources\b)"
+        print(len(translated_articles_data), "articles founded in the file ")
 
         for article_id, article in enumerate(objects_array, start=1):
             try:
@@ -196,7 +197,7 @@ def main():
             except:
                 print('try catch error')
         save_as_json(translated_articles_data, "Translated_" + file_path_write)
-        translated_articles_data = []
+        # translated_articles_data = []
 
 
 if __name__ == "__main__":
