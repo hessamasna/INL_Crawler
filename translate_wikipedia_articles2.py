@@ -168,6 +168,9 @@ def main():
             try:
                 # if article['id'] < last_index:
                 #     continue
+                if article['id'] in [t_article['article_id'] for t_article in translated_articles_data]:
+                    print('article with id \"', article_id, '\" already translated.')
+                    continue
 
                 print("++++++ title :", article['id'], ". ", article['title'], ' ++++++')
                 match = re.search(pattern, article['content']['EN'], re.DOTALL | re.IGNORECASE)
