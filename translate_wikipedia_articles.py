@@ -134,9 +134,11 @@ def save_as_json(articles_array, filename):
 
 
 def load_translated_jsons(file_path):
+    global translated_articles_data
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             data = json.load(file)
+            translated_articles_data = data
             last = data.pop()
             return last['article_id']
     except FileNotFoundError:
@@ -164,9 +166,12 @@ def main():
 
         for article_id, article in enumerate(objects_array, start=1):
             try:
-                if article['id'] < last_index:
-                    continue
+                # if article['id'] < last_index:
+                #     continue
 
+                if article['id'] in [t_article['article_id'] for t_article in translated_articles_data]:
+                    print('article with id \"', article_id, '\" already translated.')
+                    continue
                 print("++++++ title :", article['id'], ". ", article['title'], ' ++++++')
                 match = re.search(pattern, article['content']['EN'], re.DOTALL | re.IGNORECASE)
                 if match:
@@ -184,6 +189,9 @@ def main():
                         time.sleep(random.uniform(40, 60))
                 else:
                     print("No match found id =", article_id)
+            except KeyboardInterrupt:
+                print('EXIT')
+                break
             except:
                 print('try catch error')
 
