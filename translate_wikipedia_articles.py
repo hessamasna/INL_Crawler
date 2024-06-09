@@ -162,7 +162,7 @@ def main():
         file_path_write = f'random_wikipedia_{category}_articles_without_translate.json'
         objects_array = read_json_file(file_path_read)
         last_index = load_translated_jsons("Translated_" + file_path_write) + 1
-        pattern = r"^(.*?)(\bSee also\b|\bReferences\b|\bExternal links\b)"
+        pattern = r"^(.*?)(\bSee also\b|\bReferences\b|\bExternal links\b|\BSources\b)"
 
         for article_id, article in enumerate(objects_array, start=1):
             try:
